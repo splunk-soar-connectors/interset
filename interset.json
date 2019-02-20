@@ -1,7 +1,7 @@
 {
     "appid"       : "087225f5-0033-4104-a0b5-bda2cea916af",
     "name"      : "Interset AI",
-    "description" : "This app allows integration with the Interset analytics platform by implementing actions such as 'set importance' and 'get user risk'.",
+    "description" : "This app allows integration with the Interset analytics platform by implementing contain and investigate actions pertaining to importance and risk details respectively",
     "publisher": "Interset",
     "license": "Copyright (c) 2019 Interset",
     "package_name": "phantom_interset",
@@ -231,7 +231,6 @@
         ],
         "versions":"EQ(*)"
       },
-
       {
         "action": "test connectivity",
         "description": "Validate the asset configuration for connectivity",
@@ -403,7 +402,6 @@
         ],
         "versions":"EQ(*)"
       },
-
       {
         "action": "get project importance",
         "description": "Get the importance value of a project",
@@ -441,7 +439,6 @@
         ],
         "versions":"EQ(*)"
       },
-
       {
         "action": "get risk",
         "description": "Get an entity's risk value as determined by Interset analytics",
@@ -637,6 +634,5 @@
         ],
         "versions":"EQ(*)"
       }
-
     ]
 }
