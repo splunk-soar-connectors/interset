@@ -22,7 +22,7 @@
             "order": 0
         },
         "auth_token": {
-            "description": "Authorization token of a user with persisten sessions and admin permissions. ex 'aB3CdEfGHIJkl0MniyHAZndA44A'",
+            "description": "Authorization token of a user with persistent sessions and admin permissions. ex 'aB3CdEfGHIJkl0MniyHAZndA44A'",
             "data_type": "password",
             "required": true,
             "order": 1
@@ -45,21 +45,21 @@
           "action": "test connectivity",
           "description": "Validate the asset configuration for connectivity",
           "type": "test",
-          "identifier": "test connectivity",
+          "identifier": "test_connectivity",
           "read_only": true,
           "parameters": {},
           "output": [],
           "versions": "EQ(*)"
         },
         {
-            "action": "put importance",
+            "action": "set importance",
             "description": "Set the importance value of an entity",
             "type": "contain",
-            "identifier": "put importance",
+            "identifier": "set_importance",
             "read_only": false,
             "parameters": {
                 "entityType": {
-                    "description": "The EntityType of the user whose risk you wish to get",
+                    "description": "The EntityType of the user whose importance you wish to set",
                     "data_type": "string",
                     "required": true,
                     "order": 0
@@ -120,11 +120,11 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "put user importance",
+            "action": "set user importance",
             "description": "Set the importance value of a user",
             "type": "contain",
-            "identifier": "put user importance",
-            "read_only": true,
+            "identifier": "set_user_importance",
+            "read_only": false,
             "parameters": {
                 "value": {
                     "description": "Importance value",
@@ -190,11 +190,11 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "put project importance",
+            "action": "set project importance",
             "description": "Set the importance value of a project",
             "type": "contain",
-            "identifier": "put project importance",
-            "read_only": true,
+            "identifier": "set_project_importance",
+            "read_only": false,
             "parameters": {
                 "value": {
                     "description": "Importance value",
@@ -260,11 +260,11 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "put file importance",
+            "action": "set file importance",
             "description": "Set the importance value of a file",
             "type": "contain",
-            "identifier": "put file importance",
-            "read_only": true,
+            "identifier": "set_file_importance",
+            "read_only": false,
             "parameters": {
                 "value": {
                     "description": "Importance value",
@@ -330,11 +330,11 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "put device importance",
+            "action": "set device importance",
             "description": "Set the importance value of a device",
             "type": "contain",
-            "identifier": "put device importance",
-            "read_only": true,
+            "identifier": "set_device_importance",
+            "read_only": false,
             "parameters": {
                 "value": {
                     "description": "Importance value",
@@ -403,11 +403,11 @@
             "action": "get importance",
             "description": "Get the importance value of an entity",
             "type": "investigate",
-            "identifier": "get importance",
+            "identifier": "get_importance",
             "read_only": true,
             "parameters": {
                 "entityType": {
-                    "description": "The EntityType of the entity whose risk you wish to get",
+                    "description": "The EntityType of the entity whose importance you wish to get",
                     "data_type": "string",
                     "required": true,
                     "order": 0
@@ -473,7 +473,7 @@
             "action": "get user importance",
             "description": "Get the importance value of a user",
             "type": "investigate",
-            "identifier": "get user importance",
+            "identifier": "get_user_importance",
             "read_only": true,
             "parameters": {
                 "entityId": {
@@ -531,7 +531,7 @@
             "action": "get file importance",
             "description": "Get the importance value of a file",
             "type": "investigate",
-            "identifier": "get file importance",
+            "identifier": "get_file_importance",
             "read_only": true,
             "parameters": {
                 "entityId": {
@@ -589,7 +589,7 @@
             "action": "get device importance",
             "description": "Get the importance value of a device",
             "type": "investigate",
-            "identifier": "get device importance",
+            "identifier": "get_device_importance",
             "read_only": true,
             "parameters": {
                 "entityId": {
@@ -647,7 +647,7 @@
             "action": "get project importance",
             "description": "Get the importance value of a project",
             "type": "investigate",
-            "identifier": "get project importance",
+            "identifier": "get_project_importance",
             "read_only": true,
             "parameters": {
                 "entityId": {
@@ -705,7 +705,7 @@
             "action": "get risk",
             "description": "Get an entity's risk value as determined by Interset analytics",
             "type": "investigate",
-            "identifier": "get risk",
+            "identifier": "get_risk",
             "read_only": true,
             "parameters": {
                 "entityType": {
@@ -775,7 +775,7 @@
             "action": "get user risk",
             "description": "Get a user's risk value as determined by Interset analytics",
             "type": "investigate",
-            "identifier": "get user risk",
+            "identifier": "get_user_risk",
             "read_only": true,
             "parameters": {
                 "entityId": {
@@ -833,7 +833,7 @@
             "action": "get file risk",
             "description": "Get a file's risk value as determined by Interset analytics",
             "type": "investigate",
-            "identifier": "get file risk",
+            "identifier": "get_file_risk",
             "read_only": true,
             "parameters": {
                 "entityId": {
@@ -891,7 +891,7 @@
             "action": "get device risk",
             "description": "Get a device's risk value as determined by Interset analytics",
             "type": "investigate",
-            "identifier": "get device risk",
+            "identifier": "get_device_risk",
             "read_only": true,
             "parameters": {
                 "entityId": {
@@ -949,7 +949,7 @@
             "action": "get project risk",
             "description": "Get a project's risk value as determined by Interset analytics",
             "type": "investigate",
-            "identifier": "get project risk",
+            "identifier": "get_project_risk",
             "read_only": true,
             "parameters": {
                 "entityId": {

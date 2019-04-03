@@ -18,47 +18,46 @@ API_INFO_SESSION_QUERY = '/api/info/session'
 QUERY_RISKY_USERS = '/api/search/{}/{}/topRisky'
 
 # CONNECTIVITY TEST STATUS MESSAGES
-CONNECTION_SUCCESS_MESSAGE = "Connection successful."
-CONFIG_INIT_ERROR_MESSAGE = "Connection failure, make sure persistentSessions is set to 'True' and that the user role is 'admin.\
-                            Also ensure the entityId and tid you enter match the values of the authorization token you entered."
-AUTH_ERROR_MESSAGE = "Connection failed due to incorrect authorization. Ensure authorization token is correct."
-URI_ERROR_MESSAGE = "Connection failed. URI not found."
-SERVER_ERROR_MESSAGE = "Connection failure, cannot connect to server."
+CONNECTION_SUCCESS_MESSAGE = "Connection successful"
+CONFIG_INIT_ERROR_MESSAGE = "Connection failure, make sure persistentSessions is set to 'True' and that the user role is 'admin'.\
+                            Also ensure the entityId and tid you enter match the values of the authorization token you entered"
+AUTH_ERROR_MESSAGE = "Connection failed due to incorrect authorization. Ensure authorization token is correct"
+URI_ERROR_MESSAGE = "Connection failed. URI not found"
+SERVER_ERROR_MESSAGE = "Connection failure, cannot connect to server"
 
 # ACTION RESULT MESSAGES
-IMPORTANCE_SUCCESS = " Execution successful."
-IMPORTANCE_AUTH_ERROR = " Execution failed due to incorrect authorization. Ensure tid, entityId and authorization token are correct."
-IMPORTANCE_RAND_ERROR = " Execution failed."
-SUCCESS_STATUS = "Execution successful."
-AUTH_ERROR_STATUS = "Execution failed due to incorrect authorization. Ensure configuration values tid, entityId and authorization token are correct."
-RAND_ERROR_STATUS = "Execution failed."
+IMPORTANCE_SUCCESS = "Execution successful"
+IMPORTANCE_AUTH_ERROR = "Execution failed due to incorrect authorization. Ensure tid, entityId and authorization token are correct"
+IMPORTANCE_RAND_ERROR = "Execution failed"
+SUCCESS_STATUS = "Execution successful"
+AUTH_ERROR_STATUS = "Execution failed due to incorrect authorization. Ensure configuration values tid, entityId and authorization token are correct"
+RAND_ERROR_STATUS = "Execution failed"
 ENTITY_ID_NOT_EXIST_ERROR = "EntityId and EntityType pair do not exist for the configured workflow user"
-ENTITY_TYPE_NOT_EXIST_ERROR = "Entity Type does not exist."
+ENTITY_TYPE_NOT_EXIST_ERROR = "Entity Type does not exist"
 MSG_APP_ERROR = 'Msg: APP_ERROR'
 MSG_APP_SUCCESS = 'Msg: APP_SUCCESS'
 
 # ACTIONS
-TEST_CONNECTIVITY = 'test connectivity'
+TEST_CONNECTIVITY = 'test_connectivity'
 
-GET_IMPORTANCE = 'get importance'
-PUT_IMPORTANCE = 'put importance'
+GET_IMPORTANCE = 'get_importance'
+PUT_IMPORTANCE = 'set_importance'
 
-GET_RISK = 'get risk'
-GET_USER_RISK = 'get user risk'
-GET_PROJECT_RISK = 'get project risk'
-GET_FILE_RISK = 'get file risk'
-GET_MACHINE_RISK = 'get device risk'
-GET_SERVER_RISK = 'get server risk'
+GET_RISK = 'get_risk'
+GET_USER_RISK = 'get_user_risk'
+GET_PROJECT_RISK = 'get_project_risk'
+GET_FILE_RISK = 'get_file_risk'
+GET_MACHINE_RISK = 'get_device_risk'
 
-GET_USER_IMPORTANCE = 'get user importance'
-GET_PROJECT_IMPORTANCE = 'get project importance'
-GET_FILE_IMPORTANCE = 'get file importance'
-GET_DEVICE_IMPORTANCE = 'get device importance'
+GET_USER_IMPORTANCE = 'get_user_importance'
+GET_PROJECT_IMPORTANCE = 'get_project_importance'
+GET_FILE_IMPORTANCE = 'get_file_importance'
+GET_DEVICE_IMPORTANCE = 'get_device_importance'
 
-PUT_USER_IMPORTANCE = 'put user importance'
-PUT_PROJECT_IMPORTANCE = 'put project importance'
-PUT_FILE_IMPORTANCE = 'put file importance'
-PUT_DEVICE_IMPORTANCE = 'put device importance'
+PUT_USER_IMPORTANCE = 'set_user_importance'
+PUT_PROJECT_IMPORTANCE = 'set_project_importance'
+PUT_FILE_IMPORTANCE = 'set_file_importance'
+PUT_DEVICE_IMPORTANCE = 'set_device_importance'
 
 # Entity Types
 USERS = 'users'
@@ -259,9 +258,7 @@ class IntersetConnector(BaseConnector):
         try:
             top_risky_response = requests.get(self.entity_list_url.format(self.params['tid'], entityType), headers=self.HEADER, params=self.risky_params, verify=False)
         except requests.ConnectionError as e:
-            action_result.set_status(phantom.APP_ERROR, SERVER_ERROR_MESSAGE, e)
-            self.set_status_save_progress(phantom.APP_ERROR, SERVER_ERROR_MESSAGE)
-            return
+            return action_result.set_status(phantom.APP_ERROR, SERVER_ERROR_MESSAGE, e)
 
         if self.handle_response(top_risky_response, action_result):
             if len(top_risky_response.json()['data']) < 1:
@@ -337,16 +334,14 @@ class IntersetConnector(BaseConnector):
         self.set_entity_type(param)
 
         if not self.entity_valid(param, action_result):
-            return
+            return action_result.get_status()
 
         self.get_importance_url = self.get_config().get(SERVER_URL_CONF) + QUERY_IMPORTANCE.format(self.params['tid'], self.params[ENTITY_TYPE_CONF], self.params[ENTITY_ID_CONF])
 
         try:
             response = requests.get(self.get_importance_url, headers=self.HEADER, verify=False)
         except requests.ConnectionError as e:
-            action_result.set_status(phantom.APP_ERROR, SERVER_ERROR_MESSAGE, e)
-            self.set_status_save_progress(phantom.APP_ERROR, SERVER_ERROR_MESSAGE)
-            return
+            return action_result.set_status(phantom.APP_ERROR, SERVER_ERROR_MESSAGE, e)
 
         if self.handle_response(response, action_result):
             action_result.add_data(json.loads(response.text))
@@ -364,7 +359,7 @@ class IntersetConnector(BaseConnector):
         self.set_entity_type(param)
 
         if not self.entity_valid(param, action_result):
-            return
+            return action_result.get_status()
 
         body = {'value': param[VALUE]}
 
@@ -373,8 +368,7 @@ class IntersetConnector(BaseConnector):
         try:
             response = requests.put(self.get_importance_url, data=json.dumps(body), headers=self.HEADER, verify=False)
         except requests.ConnectionError as e:
-            action_result.set_status(phantom.APP_ERROR, SERVER_ERROR_MESSAGE, e)
-            return
+            return action_result.set_status(phantom.APP_ERROR, SERVER_ERROR_MESSAGE, e)
 
         if self.handle_response(response, action_result):
             return action_result.get_status()
@@ -396,7 +390,7 @@ class IntersetConnector(BaseConnector):
         entityType = self.set_entity_type(param)
 
         if not self.entity_valid(param, action_result):
-            return
+            return action_result.get_status()
 
         q_entity_type = entityType[:-1] + ':'
         self.risky_params['q'] = q_entity_type + str(param[ENTITY_ID_CONF])
@@ -404,8 +398,7 @@ class IntersetConnector(BaseConnector):
         try:
             response = requests.get(self.entity_list_url.format(self.params['tid'], entityType), headers=self.HEADER, params=self.risky_params, verify=False)
         except Exception as e:
-            action_result.set_status(phantom.APP_ERROR, SERVER_ERROR_MESSAGE, e)
-            return
+            return action_result.set_status(phantom.APP_ERROR, SERVER_ERROR_MESSAGE, e)
 
         if self.handle_response(response, action_result):
             action_result.add_data(json.loads(response.text))
